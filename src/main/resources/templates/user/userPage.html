@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base ::parent(~{::#content}, ~{::title},~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+  </head>
+  <body >
+    <div id="content">
+      <!-- Sidebar -->
+      <div th:replace="~{User/usersidebar :: usersidebar}"></div>
+
+      <!-- Main Content -->
+      <div class="flex-1 ml-0 md:ml-64 pt-20 min-h-screen bg-white dark:bg-gray-900 p-6 space-y-6">
+    
+      <!-- Greeting -->
+      <h1 class="text-3xl font-semibold text-gray-900 dark:text-white"> Welcome, <span th:text="${user.name}"></span> !</h1>
+
+      <!-- Account Summary -->
+      <section class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-md mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Account Summary</h2>
+        <div class="flex flex-col sm:flex-row sm:justify-between">
+         <div>
+            <p class="text-gray-600 dark:text-gray-400">Account Number</p>
+            <p class="font-mono text-lg  text-gray-900 dark:text-white">
+             <span th:text="${account != null ? account.accountNumber : 'No Account Found'}"></span>
+            </p>
+          </div>
+          <div>
+            <p class="text-gray-600 dark:text-gray-400">Current Balance</p>
+            <p class="text-green-600 font-bold text-lg dark:text-green-400">
+              <span th:text="${account != null ? account.balance : '0.00'}"></span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+        <a th:href="@{'/users/transfer'}" class="bg-blue-600 text-white py-3 rounded shadow hover:bg-blue-700 text-center">Transfer Money</a>
+
+        <a th:href="@{'/users/balance'}" class="bg-blue-600 text-white py-3 rounded shadow hover:bg-blue-700 text-center">Check Balance</a>
+
+        <a th:href="@{'/users/transactions'}" class="bg-blue-600 text-white py-3 rounded shadow hover:bg-blue-700 text-center">Transaction History</a>
+      </section>
+
+      <section class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-md mt-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">💳 Add Money via Card</h2>
+        <form th:action="@{/users/addmoney-card}" method="post" class="space-y-4">
+          <!-- CARD NUMBER -->
+            <div>
+              <label class="text-gray-600 dark:text-gray-400">Card Number</label>
+              <input type="text" name="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456" class="w-full mt-1 p-2 rounded border dark:bg-gray-700 dark:text-white" required>
+            </div>
+
+          <!-- EXPIRY + CVV -->
+          <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-gray-600 dark:text-gray-400">Expiry</label>
+                <input type="text" name="expiry" placeholder="MM/YY" class="w-full mt-1 p-2 rounded border dark:bg-gray-700 dark:text-white" required>
+              </div>
+
+            <div>
+                <label class="text-gray-600 dark:text-gray-400">CVV</label>
+                <input type="password" name="cvv" maxlength="3" placeholder="***" class="w-full mt-1 p-2 rounded border dark:bg-gray-700 dark:text-white" required>
+            </div>
+          </div>
+
+          <!-- AMOUNT -->
+          <div>
+            <label class="text-gray-600 dark:text-gray-400">Amount</label>
+            <input type="number" name="amount" step="0.01" placeholder="Enter amount" class="w-full mt-1 p-2 rounded border dark:bg-gray-700 dark:text-white" required>
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Add Money via Card</button>
+        </form>
+      </section>
+
+      <!-- Recent Transactions -->
+      <section class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-md">
+       <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Recent Transactions</h2>
+       <ul class="divide-y divide-gray-300 dark:divide-gray-700">
+          <li th:each="txn : ${transactions}" class="py-2 flex justify-between items-center">
+
+            <!-- LEFT SIDE -->
+            <div class="flex flex-col">
+              <span class="font-medium text-gray-800 dark:text-white">
+                <span th:text="${txn.type}"></span>
+
+                <span th:if="${txn.type.name() == 'TRANSFER'}"
+                  th:text="${txn.fromAccount.accountNumber == account.accountNumber ? ' (Sent)' : ' (Received)'}">
+                </span>
+              </span>
+           </div>
+
+            <!-- RIGHT SIDE -->
+            <span th:classappend="${txn.type.name() == 'DEBIT' || txn.fromAccount?.accountNumber == account.accountNumber} ? 'text-red-600' : 'text-green-600'"
+                th:text="${(txn.type.name() == 'DEBIT' || txn.fromAccount?.accountNumber == account.accountNumber) 
+                    ? '- ₹ ' + txn.amount 
+                    : '+ ₹ ' + txn.amount}">
+           </span>
+
+          </li>
+
+          <!-- Empty case -->
+          <li th:if="${#lists.isEmpty(transactions)}" class="py-2 text-gray-500">No recent transactions</li>
+        </ul>
+      </section>
+
+       </div>
+    </div>
+    <script>
+        console.log("user page");
+    </script>
+    
+  </body>
+</html>

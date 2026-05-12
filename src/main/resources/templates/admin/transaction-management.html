@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="dark"
+      th:replace="~{base ::parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>Transaction Monitoring</title>
+</head>
+
+<body>
+<div id="content">
+
+<!-- Sidebar -->
+<div th:replace="~{admin/adminsidebar :: adminsidebar}"></div>
+
+<div class="sm:pl-64 pt-20 p-6 min-h-screen bg-gray-100 dark:bg-gray-900 transition">
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">
+            💰 Transaction Monitoring
+        </h1>
+
+        <div class="flex flex-wrap gap-2">
+
+            <!-- TODAY BUTTON -->
+            <a href="/admins/transactions?filter=today"
+               class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Today
+            </a>
+
+            <!-- DATE FILTER -->
+            <form method="get" action="/admins/transactions"
+                  class="flex gap-2 bg-white dark:bg-gray-800 p-2 rounded shadow">
+
+                <input type="date" name="startDate"
+                       th:value="${startDate}"
+                       class="px-2 py-1 rounded border dark:bg-gray-700 dark:text-white">
+
+                <input type="date" name="endDate"
+                       th:value="${endDate}"
+                       class="px-2 py-1 rounded border dark:bg-gray-700 dark:text-white">
+
+                <button class="bg-green-600 text-white px-3 rounded hover:bg-green-700">
+                    Filter
+                </button>
+            </form>
+
+            <!-- DARK MODE -->
+            <button id="theme-toggle"
+                    class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded text-black dark:text-white">
+                🌙
+            </button>
+
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="bg-white dark:bg-gray-800 shadow rounded-xl overflow-hidden">
+
+        <table class="w-full text-sm text-left">
+
+            <thead class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                <tr>
+                    <th class="p-4">Txn ID</th>
+                    <th class="p-4">From</th>
+                    <th class="p-4">To</th>
+                    <th class="p-4">Type</th>
+                    <th class="p-4">Amount</th>
+                    <th class="p-4">Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="txn : ${transactionsPage.content}"
+                    class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+
+                    <td class="p-4 font-medium text-gray-800 dark:text-white"
+                        th:text="${txn.transactionId}"></td>
+
+                    <td class="p-4 text-gray-600 dark:text-gray-300"
+                        th:text="${txn.fromAccount != null ? txn.fromAccount.accountNumber : '-'}"></td>
+
+                    <td class="p-4 text-gray-600 dark:text-gray-300"
+                        th:text="${txn.toAccount != null ? txn.toAccount.accountNumber : '-'}"></td>
+
+                    <td class="p-4">
+                        <span th:if="${txn.type.name() == 'CREDIT'}"
+                              class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded">
+                            CREDIT
+                        </span>
+
+                        <span th:if="${txn.type.name() == 'TRANSFER'}"
+                              class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">
+                            TRANSFER
+                        </span>
+                    </td>
+
+                    <td class="p-4 font-semibold"
+                        th:classappend="${txn.type.name() == 'CREDIT'} ? 'text-green-600' : 'text-red-600'"
+                        th:text="${txn.amount}"></td>
+
+                    <td class="p-4 text-gray-500"
+                        th:text="${#temporals.format(txn.createdAt, 'dd MMM yyyy HH:mm')}"></td>
+
+                </tr>
+
+                <!-- EMPTY -->
+                <tr th:if="${transactionsPage.content.isEmpty()}">
+                    <td colspan="6"
+                        class="text-center p-6 text-gray-500 dark:text-gray-400">
+                        No transactions found 😕
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- 🔥 PAGINATION -->
+    <div class="flex justify-center items-center mt-6 gap-3"
+     th:with="
+        f=${filter != null ? filter : ''},
+        s=${startDate != null ? startDate : ''},
+        e=${endDate != null ? endDate : ''}
+     "
+     th:if="${transactionsPage.totalPages > 1}">
+
+    <!-- PREV -->
+    <a th:if="${transactionsPage.hasPrevious()}"
+       th:href="@{'/admins/transactions'(page=${transactionsPage.number - 1}, filter=${f}, startDate=${s}, endDate=${e})}"
+       class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400">
+        Prev
+    </a>
+
+    <span class="px-3 py-1 text-white">
+        Page [[${transactionsPage.number + 1}]] / [[${transactionsPage.totalPages}]]
+    </span>
+
+    <!-- NEXT -->
+    <a th:if="${transactionsPage.hasNext()}"
+       th:href="@{'/admins/transactions'(page=${transactionsPage.number + 1}, filter=${f}, startDate=${s}, endDate=${e})}"
+       class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400">
+        Next
+    </a>
+
+</div>
+
+</div>
+</div>
+
+<!-- DARK MODE SCRIPT -->
+<script>
+    const toggleBtn = document.getElementById('theme-toggle');
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+
+        if (document.documentElement.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerText = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerText = "🌙";
+        }
+    });
+</script>
+
+</body>
+</html>

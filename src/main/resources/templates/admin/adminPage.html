@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="dark"
+      th:replace="~{base ::parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+<div id="content">
+
+<div th:replace="~{admin/adminsidebar :: adminsidebar}"></div>
+
+<div class="sm:pl-64 pt-20 p-6 min-h-screen bg-gray-100 dark:bg-gray-900">
+
+    <!-- HEADER -->
+    <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+        📊 Admin Dashboard
+    </h1>
+
+    <!-- ================= TOP STATS ================= -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow hover:shadow-lg transition">
+            <p class="text-sm text-gray-500">Total Users</p>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white"
+                th:text="${totalUsers}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow hover:shadow-lg transition">
+            <p class="text-sm text-gray-500">Total Accounts</p>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white"
+                th:text="${totalAccounts}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow hover:shadow-lg transition">
+            <p class="text-sm text-gray-500">Total Transactions</p>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white"
+                th:text="${totalTransactions}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow hover:shadow-lg transition">
+            <p class="text-sm text-gray-500">Total Balance</p>
+            <h2 class="text-2xl font-bold text-green-500"
+                th:text="${totalBalance}"></h2>
+        </div>
+
+    </div>
+
+    <section class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-md mt-6 mb-10">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">💰 Add Money</h2>
+        <!-- Message -->
+        <div th:replace="~{message :: messagebox}"></div>
+        <form th:action="@{/admins/credit}" method="post" class="space-y-4">
+         <!-- ACCOUNT NUMBER -->
+            <div>
+                <label class="text-gray-600 dark:text-gray-400">Account Number</label>
+                <input type="text" name="accountNumber" placeholder="Enter customer account number" class="w-full mt-1 p-2 rounded border dark:bg-gray-700 dark:text-white" required>
+            </div>
+
+         <!-- AMOUNT -->
+            <div>
+                <label class="text-gray-600 dark:text-gray-400">Amount</label>
+                <input type="number" name="amount" step="0.01" placeholder="Enter cash amount" class="w-full mt-1 p-2 rounded border dark:bg-gray-700 dark:text-white" required>
+            </div>
+
+            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Deposit Cash</button>
+        </form>
+    </section>
+
+    <!-- ================= TRANSACTION SUMMARY ================= -->
+    <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white"> 💰 Transaction Summary (Today)</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+            <p class="text-sm text-gray-500">Credit</p>
+            <h2 class="text-xl font-bold text-green-600"
+                th:text="${todayCredit}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+            <p class="text-sm text-gray-500">Debit</p>
+            <h2 class="text-xl font-bold text-red-600"
+                th:text="${todayDebit}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+            <p class="text-sm text-gray-500">Transfers</p>
+            <h2 class="text-xl font-bold text-blue-600"
+                th:text="${todayTransfers}"></h2>
+        </div>
+
+    </div>
+
+    <!-- ================= ACCOUNT SUMMARY ================= -->
+    <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">
+        👥 Account Summary
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+            <p class="text-sm text-gray-500">Active Accounts</p>
+            <h2 class="text-xl font-bold text-green-600"
+                th:text="${activeAccounts}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+            <p class="text-sm text-gray-500">Frozen Accounts</p>
+            <h2 class="text-xl font-bold text-yellow-500"
+                th:text="${frozenAccounts}"></h2>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+            <p class="text-sm text-gray-500">Blocked Users</p>
+            <h2 class="text-xl font-bold text-red-600"
+                th:text="${blockedUsers}"></h2>
+        </div>
+
+    </div>
+
+    
+
+</div>
+</div>
+
+</body>
+</html>

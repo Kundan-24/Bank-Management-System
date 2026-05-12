@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+
+<body>
+<div id="content">
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+
+    <!-- HERO + PREVIEW -->
+    <section class="px-6 py-16">
+
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+            <!-- LEFT TEXT -->
+            <div>
+
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+                    Smart Banking <span class="text-blue-600">For Everyone</span>
+                </h1>
+
+                <p class="mt-4 text-gray-600 dark:text-gray-400">
+                    Manage your money, transfer funds, and track transactions in a secure and modern way.
+                </p>
+
+                <div class="mt-6 flex gap-4 flex-wrap">
+
+                    <a th:href="@{'/login'}"
+                       class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700">
+                        Login
+                    </a>
+
+                    <a th:href="@{'/register'}"
+                       class="bg-gray-800 text-white px-6 py-3 rounded-lg shadow hover:bg-gray-900">
+                        Create Account
+                    </a>
+
+                </div>
+
+                <!-- TRUST STRIP -->
+                <div class="mt-8 flex gap-6 text-sm text-gray-500 dark:text-gray-400">
+                    <span>✔ Secure</span>
+                    <span>✔ Fast</span>
+                    <span>✔ Trusted</span>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PREVIEW CARD -->
+            <div class="bg-gradient-to-br from-indigo-600 via-blue-600 to-blue-800 text-white p-8 rounded-2xl shadow-xl relative overflow-hidden">
+
+    <!-- decorative blur circles -->
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+    <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+
+    <!-- header -->
+    <div class="flex justify-between items-center">
+        <h2 class="text-lg font-bold">💳 Digital Account</h2>
+        <span class="text-xs bg-white/20 px-3 py-1 rounded-full">LIVE</span>
+    </div>
+
+    <!-- account info -->
+    <div class="mt-6 bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20">
+
+        <p class="text-xs text-white/70">Account Holder</p>
+        <p class="text-lg font-semibold tracking-wide">John Doe</p>
+
+        <div class="mt-5 grid grid-cols-2 gap-4">
+
+            <div>
+                <p class="text-xs text-white/70">Account No</p>
+                <p class="font-mono font-semibold">XXXX-9821</p>
+            </div>
+
+            <div>
+                <p class="text-xs text-white/70">Status</p>
+                <p class="text-green-300 font-semibold">● Active</p>
+            </div>
+
+        </div>
+
+        <div class="mt-5">
+            <p class="text-xs text-white/70">Available Balance</p>
+            <p class="text-2xl font-bold">₹ 12,450.00</p>
+        </div>
+
+    </div>
+
+    <!-- actions -->
+    <div class="mt-6 grid grid-cols-3 gap-3 text-center text-sm">
+
+        <div class="bg-white/10 hover:bg-white/20 transition p-3 rounded-xl cursor-pointer">
+            💸<br>Transfer
+        </div>
+
+        <div class="bg-white/10 hover:bg-white/20 transition p-3 rounded-xl cursor-pointer">
+            📊<br>History
+        </div>
+
+        <div class="bg-white/10 hover:bg-white/20 transition p-3 rounded-xl cursor-pointer">
+            ⚙️<br>Settings
+        </div>
+
+    </div>
+
+</div>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section class="px-6 pb-16">
+
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <h3 class="font-bold">🔐 Security First</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    End-to-end encryption protects your data.
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <h3 class="font-bold">⚡ Instant Transfer</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    Send money within seconds.
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <h3 class="font-bold">📱 Mobile Ready</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    Fully responsive banking system.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECURITY BANNER -->
+    <section class="px-6 pb-20">
+
+    <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 p-10 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+
+        <!-- header -->
+        <div class="text-center">
+
+            <div class="inline-flex items-center justify-center h-12 w-12 bg-blue-600 text-white rounded-xl mb-4 shadow">
+                🔐
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                Enterprise Grade Security
+            </h2>
+
+            <p class="mt-2 text-gray-500 dark:text-gray-400">
+                Multi-layer protection system designed for safe and secure banking experience.
+            </p>
+
+        </div>
+
+        <!-- features -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+
+            <div class="p-5 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                <p class="font-semibold text-gray-900 dark:text-white">🛡 Encryption</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    End-to-end data protection
+                </p>
+            </div>
+
+            <div class="p-5 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                <p class="font-semibold text-gray-900 dark:text-white">⚡ Fraud Detection</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    AI-based monitoring system
+                </p>
+            </div>
+
+            <div class="p-5 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                <p class="font-semibold text-gray-900 dark:text-white">🔒 Secure Access</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    OTP & role-based login
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+</div>
+
+<script>
+    console.log("Premium index loaded");
+</script>
+
+</body>
+</html>

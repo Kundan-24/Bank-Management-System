@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base ::parent(~{::#content}, ~{::title},~{::script})}">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="content">
+        <!-- Sidebar -->
+        <div th:replace="~{User/usersidebar :: usersidebar}"></div>
+    <div class="md:pl-64 pt-20 min-h-screen bg-white dark:bg-gray-900 p-6">
+
+  <h2 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+    Transaction History
+  </h2>
+
+  <div class="overflow-x-auto bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
+    
+    <table class="w-full text-left text-gray-700 dark:text-gray-300">
+      
+      <thead class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white">
+        <tr>
+          <th class="p-3">Date</th>
+          <th class="p-3">Type</th>
+          <th class="p-3">Amount</th>
+          <th class="p-3">Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr th:each="txn : ${transactions}" class="border-b dark:border-gray-700">
+          <td class="p-3" th:text="${#temporals.format(txn.createdAt, 'dd MMM yyyy')}"> </td>
+          <td class="p-3" th:classappend="${txn.type.name() == 'DEBIT' || (txn.type.name() == 'TRANSFER' && txn.fromAccount?.accountNumber == account.accountNumber)} ? 'text-red-500' : 'text-green-500'" th:text="${txn.type}"> </td>
+          <td class="p-3" th:classappend="${txn.type.name() == 'DEBIT' || (txn.type.name() == 'TRANSFER' && txn.fromAccount?.accountNumber == account.accountNumber)} ? 'text-red-500' : 'text-green-500'" th:text="${(txn.type.name() == 'DEBIT' || (txn.type.name() == 'TRANSFER' && txn.fromAccount?.accountNumber == account.accountNumber)) ? '- ₹ ' + txn.amount : '+ ₹ ' + txn.amount}"> </td>        
+          <td class="p-3 text-green-600">Success</td>
+        </tr>
+
+         <!-- EMPTY CASE -->
+        <tr th:if="${#lists.isEmpty(transactions)}">
+        <td colspan="4" class="text-center p-4 text-gray-500"> No transactions found </td>
+        </tr>
+
+        
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+</div>
+
+<script>
+        console.log("transaction page");
+    </script>
+</body>
+</html>

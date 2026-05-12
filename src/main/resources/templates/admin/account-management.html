@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="dark"
+      th:replace="~{base ::parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>Account Monitoring</title>
+</head>
+
+<body>
+<div id="content">
+
+<!-- Sidebar -->
+<div th:replace="~{admin/adminsidebar :: adminsidebar}"></div>
+
+<div class="sm:pl-64 pt-20 p-6 min-h-screen bg-gray-100 dark:bg-gray-900 transition">
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">
+            💳 Account Monitoring
+        </h1>
+
+        <div class="flex gap-2">
+
+            <!-- SEARCH -->
+            <form method="get" action="/admins/accounts"
+                  class="flex bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
+
+                <input type="text"
+                       name="keyword"
+                       placeholder="Search account / user..."
+                       class="px-3 py-2 bg-transparent outline-none text-gray-700 dark:text-white">
+
+                <button class="bg-blue-600 px-4 text-white hover:bg-blue-700">
+                    🔍
+                </button>
+            </form>
+
+            <!-- DARK MODE -->
+            <button id="theme-toggle"
+                    class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded text-black dark:text-white">
+                🌙
+            </button>
+
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="bg-white dark:bg-gray-800 shadow rounded-xl overflow-hidden mb-8">
+
+        <table class="w-full text-sm text-left">
+
+            <thead class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                <tr>
+                    <th class="p-4">Account No</th>
+                    <th class="p-4">User</th>
+                    <th class="p-4">Type</th>
+                    <th class="p-4">Balance</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 text-center">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="acc : ${accounts}" class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+
+                    <!-- ACCOUNT -->
+                    <td th:text="${acc.accountNumber}" class="p-4 font-medium text-gray-900 dark:text-white"></td>
+
+                    <!-- USER -->
+                    <td th:text="${acc.userName}" class="p-4 text-gray-600 dark:text-gray-300"></td>
+                  
+                    <!-- TYPE -->
+                     <td th:text="${acc.accountType}" class="p-4 text-gray-600 dark:text-gray-300"></td>   
+
+                    <!-- BALANCE -->
+                    <td th:text="${acc.balance}" class="p-4 font-semibold text-green-600"></td>
+
+                    <!-- STATUS -->
+                    <td class="p-4">
+                        <span th:if="${acc.active}" class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+                            Active
+                        </span>
+
+                        <span th:unless="${acc.active}" class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300">
+                            Frozen
+                        </span>
+                    </td>
+
+                    <!-- ACTIONS -->
+                    <td class="p-4 flex justify-center gap-2">
+
+                        <!-- FREEZE -->
+                        <a th:if="${acc.active}" th:href="@{'/admins/accounts/freeze/' + ${acc.accountId}}"
+                           class="px-3 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white rounded">
+                            Freeze
+                        </a>
+
+                        <!-- UNFREEZE -->
+                        <a th:unless="${acc.active}" th:href="@{'/admins/accounts/unfreeze/' + ${acc.accountId}}"
+                           class="px-3 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded">
+                            Unfreeze
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                <!-- EMPTY STATE -->
+                <tr th:if="${#lists.isEmpty(accounts)}">
+                    <td colspan="5" class="text-center p-6 text-gray-500 dark:text-gray-400">
+                        No accounts found 😕
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
+                <p class="text-sm text-gray-500">Total Accounts</p>
+                <h2 th:text="${totalAccounts}" class="text-2xl font-bold text-gray-800 dark:text-white"></h2>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
+                <p class="text-sm text-green-500">Active Accounts</p>
+                <h2 th:text="${activeAccounts}" class="text-2xl font-bold text-green-600"></h2>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
+                <p class="text-sm text-red-500">Frozen Accounts</p>
+                <h2 th:text="${frozenAccounts}" class="text-2xl font-bold text-red-600"></h2>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
+                <p class="text-sm text-blue-500">Total Balance</p>
+                <h2 th:text="${totalBalance}" class="text-2xl font-bold text-blue-600"></h2>
+            </div>
+    </div>
+
+</div>
+</div>
+
+<!-- DARK MODE SCRIPT -->
+<script>
+    const toggleBtn = document.getElementById('theme-toggle');
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+
+        if (document.documentElement.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerText = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerText = "🌙";
+        }
+    });
+</script>
+
+</body>
+</html>

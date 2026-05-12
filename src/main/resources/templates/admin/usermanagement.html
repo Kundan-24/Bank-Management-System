@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="dark"
+      th:replace="~{base ::parent(~{::#content}, ~{::title}, ~{::script})}">
+<head>
+    <title>User Management</title>
+</head>
+
+<body>
+<div id="content">
+
+ <div th:replace="~{admin/adminsidebar :: adminsidebar}"></div>
+
+ <div class="sm:pl-64 pt-20 p-6 min-h-screen bg-gray-100 dark:bg-gray-900 transition">
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">
+            👤 User Management
+        </h1>
+
+        <div class="flex gap-2">
+
+            <!-- SEARCH -->
+            <form method="get" action="/admins/users"
+                  class="flex bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
+
+                <input type="text"
+                       name="keyword"
+                       th:value="${keyword != null ? keyword : ''}"
+                       placeholder="Search users..."
+                       class="px-3 py-2 bg-transparent outline-none text-gray-700 dark:text-white">
+
+                <button class="bg-blue-600 px-4 text-white">
+                    🔍
+                </button>
+            </form>
+
+            <!-- THEME -->
+            <button id="theme-toggle"
+                    class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded text-black dark:text-white">
+                🌙
+            </button>
+
+        </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        <div th:each="user : ${usersPage.content}"
+             class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 hover:shadow-lg transition">
+
+            <!-- NAME + STATUS -->
+            <div class="flex justify-between items-center mb-2">
+
+                <h2 class="font-bold text-lg text-gray-800 dark:text-white"
+                    th:text="${user.name}"></h2>
+
+                <span th:if="${user.enabled}"
+                      class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                    Active
+                </span>
+
+                <span th:unless="${user.enabled}"
+                      class="text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full">
+                    Blocked
+                </span>
+
+            </div>
+
+            <!-- INFO -->
+            <p class="text-sm text-gray-600 dark:text-gray-300"
+               th:text="${user.email}"></p>
+
+            <p class="text-sm text-gray-600 dark:text-gray-300"
+               th:text="${user.phoneNumber}"></p>
+
+            <p class="text-xs text-gray-400 mt-2">
+                ID: <span th:text="${user.userId}"></span>
+            </p>
+
+            <!-- ACTIONS -->
+            <div class="flex justify-between mt-4">
+
+                <a th:href="@{'/admins/users/delete/' + ${user.userId}}"
+                   class="px-3 py-1 text-xs bg-red-600 text-white rounded">
+                    Delete
+                </a>
+
+                <a th:if="${user.enabled}"
+                   th:href="@{'/admins/users/block/' + ${user.userId}}"
+                   class="px-3 py-1 text-xs bg-yellow-500 text-white rounded">
+                    Block
+                </a>
+
+                <a th:unless="${user.enabled}"
+                   th:href="@{'/admins/users/unblock/' + ${user.userId}}"
+                   class="px-3 py-1 text-xs bg-green-600 text-white rounded">
+                    Unblock
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="flex justify-center mt-8 gap-3"
+     th:if="${usersPage.totalPages > 1}">
+
+    <a th:if="${usersPage.hasPrevious()}"
+       th:href="@{/admins/users(page=${usersPage.number - 1}, keyword=${keyword})}"
+       class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded">
+        Prev
+    </a>
+
+    <span class="px-3 py-1 text-white">
+        Page [[${usersPage.number + 1}]] / [[${usersPage.totalPages}]]
+    </span>
+
+    <a th:if="${usersPage.hasNext()}"
+       th:href="@{/admins/users(page=${usersPage.number + 1}, keyword=${keyword})}"
+       class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded">
+        Next
+    </a>
+
+</div>
+
+</div>
+</div>
+
+<!-- DARK MODE SCRIPT -->
+<script id="d93kdl">
+    const toggleBtn = document.getElementById('theme-toggle');
+
+    // load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+
+        if (document.documentElement.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerText = "☀️";
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerText = "🌙";
+        }
+    });
+</script>
+
+</body>
+</html>

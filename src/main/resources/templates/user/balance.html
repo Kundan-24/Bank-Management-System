@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base ::parent(~{::#content}, ~{::title},~{::script})}">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>balance</title>
+</head>
+<body>
+    <div id="content">
+        <!-- Sidebar -->
+        <div th:replace="~{User/usersidebar :: usersidebar}"></div>
+    <!-- Main Content -->
+  <div class="md:ml-64 pt-20 p-6 min-h-screen bg-gray-50 dark:bg-gray-900 space-y-6">
+
+    <!-- Heading -->
+    <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
+      Account Balance
+    </h1>
+
+    <!-- Balance Card -->
+    <div class="bg-white dark:bg-gradient-to-r dark:from-blue-600 dark:to-indigo-600
+            rounded-xl p-6 shadow-lg text-gray-900 dark:text-white">
+
+  <!-- Available Balance -->
+  <p class="text-sm font-bold opacity-90 text-gray-900 dark:text-white">
+    Available Balance
+  </p>
+
+  <h2 class="text-4xl font-extrabold mt-2 text-gray-900 dark:text-white">
+    ₹ <span th:text="${account != null ? account.balance : '0.00'}"></span>
+  </h2>
+
+  <div class="mt-4 flex justify-between text-sm font-semibold opacity-100 text-gray-900 dark:text-white">
+    <span>Account No: <span th:text="${account != null ? account.accountNumber : 'N/A'}"></span></span>
+    <span>Status: Active</span>
+  </div>
+
+</div>
+    <!-- Extra Info Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+      <!-- Last Transaction -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Last Transaction</p>
+        <p class="text-lg font-semibold text-gray-800 dark:text-white">
+          ₹ -150 (Payment)
+        </p>
+        <p class="text-xs text-gray-400">Today, 2:30 PM</p>
+      </div>
+
+      <!-- Monthly Spend -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Monthly Spend</p>
+        <p class="text-lg font-semibold text-red-500">₹ 2,350</p>
+        <p class="text-xs text-gray-400">This month</p>
+      </div>
+
+    </div>
+
+    <!-- Mini Actions -->
+    <div class="flex flex-wrap gap-3">
+      <a th:href="@{'/users/transfer'}" 
+         class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
+         Transfer Money
+      </a>
+
+      <a href="/user/transactions" 
+         class="bg-gray-700 text-white px-4 py-2 rounded shadow hover:bg-gray-800">
+         View Transactions
+      </a>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<script>
+        console.log("balance page");
+    </script>
+</body>
+</html>

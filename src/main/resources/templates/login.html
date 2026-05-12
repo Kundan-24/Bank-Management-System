@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}">
+<head>
+    <title>Login Page</title>
+</head>
+<body> 
+  <div id="content" class="pt-16">
+    <div class="grid grid-cols-12 pt-20">
+    <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+    <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+         <!-- 6 ki space le rahi hai -->
+           <!-- card -->
+            <!-- Form ka upper border -->
+          <div class="block  p-6 border-t-[10px] border-green-700 bg-white   rounded-xl shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700">
+           
+            <!-- message here -->
+            <div data-th-replace="~{message :: messagebox}"></div>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Login Here</h5>
+          <p class="font-normal text-gray-400 dark:text-gray-400">Start managing banking system on cloud...</p> 
+         <!-- message -->
+          <div class="text-red-600 my-2" th:if="${param.error}">Invalid username and password</div>
+          <div class="text-green-600 my-2" th:if="${param.logout}">You have been logged out.</div>
+        
+          <form class="mt-4" th:action="@{/authenticate}" method="post">  
+              <!-- email field -->
+              <div class="mb-2">
+               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+               <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
+              </div>
+
+              <!--username field  -->
+              <div class="mb-2">
+               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+               <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+              </div>
+
+                <!-- button -->
+                 <div class="mb-2 flex justify-center space-x-3">
+                   <button type="submit" class="px-3 py-2 rounded bg-gray-800 text-white dark:bg-blue-700 dark:hover:bg-blue-900 hover:bg-gray-900">Login</button>
+                   <button type="reset" class="px-3 py-2 rounded bg-orange-800 text-white dark:bg-orange-700 dark:hover:bg-orange-900 hover:bg-orange-900">Reset</button>
+                 </div>     
+          </form>
+          
+
+          
+          </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    console.log("Login page");
+  </script>
+  <script>
+    console.log("second script");
+  </script>
+</body>
+</html>

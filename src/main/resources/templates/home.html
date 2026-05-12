@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base ::parent(~{::#content}, ~{::title},~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | MyBank</title>
+</head>
+
+<body>
+<div id="content">
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden px-6 py-28 text-center">
+
+        <!-- background glow -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-10 left-1/2 w-72 h-72 bg-blue-500 blur-3xl rounded-full"></div>
+            <div class="absolute bottom-10 right-1/3 w-72 h-72 bg-indigo-500 blur-3xl rounded-full"></div>
+        </div>
+
+        <div class="relative z-10">
+
+            <h1 class="text-5xl font-extrabold text-gray-900 dark:text-white">
+                Banking Made <span class="text-blue-600">Simple</span>
+            </h1>
+
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Secure, fast and modern digital banking experience designed for everyone.
+            </p>
+
+            <div class="mt-8 flex justify-center gap-4 flex-wrap">
+
+                <a th:href="@{'/login'}"
+                   class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg">
+                    Get Started
+                </a>
+
+                <a th:href="@{'/register'}"
+                   class="px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-xl shadow-lg dark:bg-gray-700">
+                    Open Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="px-6 pb-16">
+
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <p class="text-2xl font-bold text-blue-600">🔒</p>
+                <p class="font-semibold text-gray-900 dark:text-white">Secure</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <p class="text-2xl font-bold text-green-600">⚡</p>
+                <p class="font-semibold text-gray-900 dark:text-white">Fast</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <p class="text-2xl font-bold text-purple-600">🌐</p>
+                <p class="font-semibold text-gray-900 dark:text-white">Global</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <p class="text-2xl font-bold text-pink-600">24/7</p>
+                <p class="font-semibold text-gray-900 dark:text-white">Support</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURE HIGHLIGHTS -->
+    <section class="px-6 pb-20">
+
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+
+            <div class="p-6 rounded-2xl bg-white dark:bg-gray-800 shadow hover:scale-105 transition">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Instant Transfers</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    Send money instantly anywhere with zero delay.
+                </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white dark:bg-gray-800 shadow hover:scale-105 transition">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Smart Dashboard</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    Track your finances with clean analytics.
+                </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white dark:bg-gray-800 shadow hover:scale-105 transition">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Bank Grade Security</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    Multi-layer protection for your money.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECURITY + TRUST TEASER -->
+<section class="px-6 pb-20">
+
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 items-center">
+
+        <!-- LEFT INFO -->
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow">
+
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+                Built for Trust & Security 🔐
+            </h2>
+
+            <p class="mt-3 text-gray-600 dark:text-gray-400">
+                Every transaction is protected with enterprise-level encryption and fraud monitoring systems.
+            </p>
+
+            <div class="mt-5 space-y-3 text-gray-700 dark:text-gray-300">
+
+                <div class="flex items-center gap-2">
+                    <span class="text-green-500">✔</span>
+                    Real-time fraud detection
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span class="text-green-500">✔</span>
+                    Secure payment gateway
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span class="text-green-500">✔</span>
+                    Encrypted user data storage
+                </div>
+
+            </div>
+
+        </div>
+
+        
+        <!-- RIGHT VISUAL CARD (PREMIUM VERSION) -->
+<div class="bg-gradient-to-br from-blue-700 via-indigo-600 to-purple-700 p-10 rounded-3xl shadow-2xl text-white relative overflow-hidden">
+
+    <!-- glow effect -->
+    <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-black/20 rounded-full blur-3xl"></div>
+
+    <!-- heading -->
+    <h2 class="text-2xl font-bold">
+        Smart Banking, Reimagined 🏦
+    </h2>
+
+    <p class="mt-2 text-white/80">
+        Everything you need to manage your money in one secure place.
+    </p>
+
+    <!-- mini feature list -->
+    <div class="mt-6 space-y-3">
+
+        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl">
+            <span>⚡</span>
+            <span class="text-sm">Instant money transfer in seconds</span>
+        </div>
+
+        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl">
+            <span>🔐</span>
+            <span class="text-sm">Bank-grade security & encryption</span>
+        </div>
+
+        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl">
+            <span>📊</span>
+            <span class="text-sm">Real-time balance tracking</span>
+        </div>
+
+        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl">
+            <span>📱</span>
+            <span class="text-sm">Access from any device, anytime</span>
+        </div>
+
+    </div>
+
+    <!-- bottom highlight -->
+    <div class="mt-6 bg-white/10 p-4 rounded-2xl text-center">
+
+        <p class="text-sm text-white/80">Trusted by users across India</p>
+        <p class="text-xl font-bold mt-1">10,000+ Active Accounts</p>
+
+    </div>
+
+</div>
+
+
+        
+
+    </div>
+
+</section>
+
+</div>
+
+</div>
+
+<script>
+    console.log("Index page loaded");
+</script>
+
+</body>
+</html>
