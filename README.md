@@ -62,15 +62,6 @@ Admin Dashboard
 . Account Monitoring
 . Transaction Monitoring
 
-# Screenshots
-User Dashboard
-
-
-
-Admin Dashboard
-
-
-
 # Author
 
 Kundan Kumar
